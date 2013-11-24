@@ -2,30 +2,20 @@ require 'pathname'
 
 source 'http://rubygems.org'
 
+gemspec
+
 SOURCE         = ENV.fetch('SOURCE', :git).to_sym
 REPO_POSTFIX   = SOURCE == :path ? ''                                : '.git'
 DATAMAPPER     = SOURCE == :path ? Pathname(__FILE__).dirname.parent : 'http://github.com/datamapper'
-DM_VERSION     = '~> 1.2.0'
+DM_VERSION     = '~> 1.3.0.beta'
 DO_VERSION     = '~> 0.10.6'
 DM_DO_ADAPTERS = %w[ sqlite postgres mysql oracle sqlserver ]
 CURRENT_BRANCH = ENV.fetch('GIT_BRANCH', 'master')
 
-gem 'bcrypt-ruby', '~> 3.0'
-gem 'fastercsv',   '~> 1.5'
-gem 'multi_json',  '~> 1.0'
-gem 'json',        '~> 1.6', :platforms => [ :ruby_18 ]
-gem 'safe_yaml',   '~> 0.7.0'
-gem 'stringex',    '~> 1.4'
-gem 'uuidtools',   '~> 2.1'
-
 gem 'dm-core',     DM_VERSION, SOURCE => "#{DATAMAPPER}/dm-core#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
 
 group :development do
-
   gem 'dm-validations', DM_VERSION, SOURCE => "#{DATAMAPPER}/dm-validations#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
-  gem 'rake',           '~> 0.9'
-  gem 'rspec',          '~> 1.3'
-
 end
 
 platforms :mri_18 do

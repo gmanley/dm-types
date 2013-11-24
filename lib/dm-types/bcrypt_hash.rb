@@ -4,9 +4,12 @@ require 'bcrypt'
 module DataMapper
   class Property
     class BCryptHash < String
-      include PassThroughLoadDump
 
       length 60
+
+      def load(value)
+        typecast(value) unless value.nil?
+      end
 
       def typecast(value)
         return value if value.nil? || value.kind_of?(BCrypt::Password)
@@ -16,7 +19,7 @@ module DataMapper
       end
 
       def dump(value)
-        hash = typecast(value)
+        hash = load(value)
         return if hash.nil?
         hash_string = hash.to_s
         hash_string.encode!('UTF-8') if hash_string.respond_to?(:encode!)

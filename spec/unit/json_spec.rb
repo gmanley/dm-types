@@ -10,23 +10,6 @@ try_spec do
       @property = DataMapper::TypesFixtures::Person.properties[:positions]
     end
 
-    describe '#valid?' do
-      before :all do
-        @string = '{ "foo": "bar" }'
-        @json   = MultiJson.decode(@string)
-      end
-
-      describe "with a String" do
-        subject { @property.valid?(@input) }
-        it { subject.should be(true) }
-      end
-
-      describe "with JSON" do
-        subject { @property.valid?(@json) }
-        it { subject.should be(true) }
-      end
-    end
-
     describe '.load' do
       describe 'when nil is provided' do
         it 'returns nil' do
@@ -36,7 +19,7 @@ try_spec do
 
       describe 'when Json encoded primitive string is provided' do
         it 'returns decoded value as Ruby string' do
-          @property.load(MultiJson.encode(:value => 'JSON encoded string')).should == { 'value' => 'JSON encoded string' }
+          @property.load(MultiJson.dump(:value => 'JSON encoded string')).should == { 'value' => 'JSON encoded string' }
         end
       end
 

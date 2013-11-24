@@ -36,7 +36,8 @@ module DataMapper
         end
       end
 
-      def typecast_to_primitive(value)
+      def typecast(value)
+        return if value.nil?
         # Attempt to typecast using the class of the first item in the map.
         case flag_map[1]
         when ::Symbol then value.to_sym
